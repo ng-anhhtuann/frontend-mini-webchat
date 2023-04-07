@@ -1,0 +1,158 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 10px;
+    background-color: #F9FAFB;
+  }
+  
+  @media (min-width: 640px) {
+    .formContainer {
+      padding: 1rem 2rem;
+    }
+  }
+
+  .titleWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  @media (min-width: 200px) {
+    .wrapper {
+      padding: 1rem 1rem 1rem;
+    }
+  }
+  .formParent {
+    z-index: 10;
+    width: 100%;
+    max-width: 28rem;
+    overflow: hidden;
+    margin-top: 20px;
+    border-radius: 1.5rem;
+    border: 1px solid #d2d6dc;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+  }
+
+.formLabel {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.75rem;
+    color: #718096;
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
+.centerInput {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+.formInput {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #374151;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d2d6dc;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  .formInput:focus {
+    outline: none;
+    border-color: black;
+  }
+  .formInput::placeholder {
+    color: #9ca3af;
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  }
+  .formInput:-ms-input-placeholder {
+    color: #9ca3af;
+  }
+  .formInput::-ms-input-placeholder {
+    color: #9ca3af;
+  }
+
+  .formFooter {
+    text-align: center;
+    font-size: 12px;
+    color: #4a5568;
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  }
+
+  .formButton {
+    display: flex;
+    height: 2.5rem;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border: 1px solid black;
+    font-size: 0.875rem;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    background-color: black;
+    color: white;
+  }
+  .formButton:hover {
+    background-color: white;
+    color: black;
+  }
+
+.fullWidth {
+    width: 80%;
+}
+
+.loading {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .loading .spacer {
+    margin-right: 2px;
+  }
+  
+  .loading span {
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 1px;
+  }
+  
+  .loading span:nth-of-type(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .loading span:nth-of-type(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
