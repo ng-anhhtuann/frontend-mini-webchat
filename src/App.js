@@ -1,20 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './shared/styles/global.css'
-import Form from './shared/components/Form';
-
+import Text from './shared/components/Text';
+import Logo from './shared/components/Logo';
+import Footer from "./shared/components/Footer";
 function App() {
   return (
     <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-      <header className="formParent">
-        <div className="titleWrapper">
-          <p className='title'>sign in</p>
-          <p className='subTitle'>use your email vs password to sign in</p>
-        </div>
-        <Form onSubmit={()=>{}}/>
-      </header>
+      <Logo isSpin={false}/>
+      <Text isSub={false} text="chat-verse ✨"/>
+      <Footer url="/signup" textRight={" to join with us 👋🏼"} embeddedUrl={"create account"}/>
+      <Footer url="/signin" textRight={" to continue if you've already had an account 🔥"} embeddedUrl={"sign in"}/>
     </div>
   );
 }
