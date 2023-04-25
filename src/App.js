@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-
+import './shared/styles/global.css'
+import Text from './shared/components/Text';
+import Logo from './shared/components/Logo';
+import Footer from "./shared/components/Footer";
 function App() {
-  // const [hasAccount, setHasAccount] = useState(false);
-
-  // const handleYesClick = () => {
-  //   setHasAccount(true);
-  // }
-
-  // const handleNoClick = () => {
-  //   setHasAccount(false);
-  // }
-
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className='Title'>Welcome to this shit</p>
-        {/* <p className='subTitle'>Do you have an account?</p> */}
-      </header>
+      <Logo isSpin={false}/>
+      <Text isSub={false} text="chat-verse ✨"/>
+      <Footer url="/signup" textRight={" to join with us 👋🏼"} embeddedUrl={"create account"}/>
+      <Footer url="/signin" textRight={" to continue if you've already had an account 🔥"} embeddedUrl={"sign in"}/>
     </div>
   );
 }
