@@ -44,22 +44,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-.title {
-  color: black;
-  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.subTitle {
-  color: #6B7280;
-  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-  font-size: 0.875rem;
-}
-
-.Input {
-  border-radius: 6px;
-  min-height: 30px;
-  height: 40px;
-}

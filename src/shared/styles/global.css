@@ -112,6 +112,7 @@
 .formButton:hover {
   background-color: white;
   color: black;
+  cursor: pointer;
 }
 
 .title {
@@ -131,13 +132,14 @@
   color: #393d44;
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
   font-size: 0.875rem;
+  font-weight: 800;
   text-decoration: underline;
 }
 
 .embeddedUrl:hover {
   color: black;
-  font: 900;
-  font-weight: bold;
+  font-weight: 900;
+  font-size: 0.95rem;
 }
 
 .fullWidth {
