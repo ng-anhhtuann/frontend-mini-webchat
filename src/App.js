@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import './shared/styles/global.css'
+import './shared/styles/global.scss'
 import Text from './shared/components/Text';
 import Logo from './shared/components/Logo';
 import Footer from "./shared/components/Footer";

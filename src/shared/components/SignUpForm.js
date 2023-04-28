@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/global.css"
+import "../styles/global.scss"
 import { Input, Text, Button, Footer } from "./index";
 export default function SignUpForm({ onSubmit }) {
     return (

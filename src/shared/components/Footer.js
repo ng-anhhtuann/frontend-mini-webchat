@@ -1,5 +1,5 @@
 import React from "react";
-import "../../shared/styles/global.css"
+import "../styles/global.scss"
 import { Link } from "react-router-dom";
 export default function Footer({url, textRight="", textLeft="", embeddedUrl}) {
     return (

@@ -5,8 +5,10 @@ import SignInForm from '../../shared/components/SignInForm';
 
 export default function SignIn() {
     return (
-        <div className="App">
-            <Logo />
+        <div id="auth-container">
+            <div className="logo-container">
+                <Logo />
+            </div>
             <SignInForm onSubmit={()=>{}}/>
         </div>
     )

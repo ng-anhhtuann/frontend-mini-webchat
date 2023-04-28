@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/global.css"
+import "../styles/global.scss"
 
 const LoadingDots = ({ color = "#000" }) => {
 return (
