@@ -1,206 +1,208 @@
 @import 'src/assets/scss/variables';
 
 // SIGN IN PAGE
-#auth-container{
-  min-height: 100vh;
-  background-color: $bg-main;
+#auth-container {
+    min-height: 100vh;
+    background-color: $bg-main;
 
-  .logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #auth-card{
-    display: flex;
-    justify-content: center;
-
-    & > div {
-      display: flex;
-      flex-direction: column;
-      min-width: 100%;
-      margin-top: 2.5rem;
-      background-color: white;
-      border-bottom-left-radius: 20px;
-      border-top-left-radius: 20px;
-
-      @media (min-width: 800px) {
-        flex-direction: row;
-        min-width: 500px;
-        margin-top: 2.5rem;
-      }
-
-      #image-section {
-        background-color: $bg-light;
-        border-radius: 20px;
-
-        @media (min-width: 800px) {
-          border-radius: 20px;
-        }
-
-        img {
-          max-height: 300px;
-          min-width: 50%;
-        }
-      }
-
-    }
-
-    .formContainer {
-      min-width: 100%;
-      padding: 20px;
-      background-color: white;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-      margin-top: 2.5rem;
-
-      @media (min-width: 800px) {
-        min-width: 300px;
-        box-sizing: border-box;
-      }
-
-      .formLabel {
-        margin-top: 5px;
-        font-size: 0.75rem;
-        color: #718096;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-      }
-
-      .centerInput {
-        height: 100%;
-        width: 100%;
+    .logo-container {
         display: flex;
         justify-content: center;
-        align-items: center;
-        margin-top: 5px;
-      }
-
-      .formInput {
-        width: 100%;
-        height: 100%;
-        padding: 0.5rem 0.5rem;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        color: #374151;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #d2d6dc;
-        border-radius: 0.25rem;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      }
-
-      .formInput:focus {
-        outline: none;
-        border-color: black;
-      }
-
-      .formInput::placeholder {
-        color: #9ca3af;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-      }
-
-      .formInput:-ms-input-placeholder {
-        color: #9ca3af;
-      }
-
-      .formInput::-ms-input-placeholder {
-        color: #9ca3af;
-      }
-
-      .formButton {
-        display: flex;
-        height: 2.5rem;
-        width: 80%;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.375rem;
-        border: 1px solid black;
-        font-size: 0.875rem;
-        transition: all 0.2s ease-in-out;
-        outline: none;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-        background-color: black;
-        color: white;
-      }
-
-      .formButton:hover {
-        background-color: white;
-        color: black;
-        cursor: pointer;
-      }
-
-      .title {
-        color: black;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-        font-size: 1.25rem;
-        font-weight: 700;
-      }
-
-      .subTitle {
-        color: black;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-        font-size: 0.875rem;
-      }
-
-      .embeddedUrl {
-        color: #393d44;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-        font-size: 0.875rem;
-        font-weight: 800;
-        text-decoration: underline;
-      }
-
-      .embeddedUrl:hover {
-        color: black;
-        font-weight: 900;
-        font-size: 0.95rem;
-      }
-
-      .fullWidth {
-        width: 80%;
-      }
-
-      .loading {
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .loading .spacer {
-        margin-right: 2px;
-      }
-
-      .loading span {
-        animation-name: blink;
-        animation-duration: 1.4s;
-        animation-iteration-count: infinite;
-        animation-fill-mode: both;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        display: inline-block;
-        margin: 0 1px;
-      }
-
-      .loading span:nth-of-type(2) {
-        animation-delay: 0.2s;
-      }
-
-      .loading span:nth-of-type(3) {
-        animation-delay: 0.4s;
-      }
-
-      @keyframes blink {
-        0% {
-          opacity: 0.2;
-        }
-
-        20% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0.2;
-        }
-      }
     }
-  }
+
+    #auth-card {
+        display: flex;
+        justify-content: center;
+
+        & > div {
+            display: flex;
+            flex-direction: column;
+            margin-top: 2.5rem;
+
+            @media (min-width: 800px) {
+                flex-direction: row;
+                min-width: 500px;
+                margin-top: 2.5rem;
+            }
+
+            & > div {
+                @media (max-width: 800px) {
+                    border-radius: 20px;
+                }
+            }
+
+            #image-section {
+                background-color: $bg-light;
+
+                @media (min-width: 800px) {
+                    min-width: 300px;
+                    border-top-left-radius: 20px;
+                    border-bottom-left-radius: 20px;
+                }
+
+                img {
+                    max-height: 300px;
+                    min-width: 100%;
+                }
+            }
+
+            #form-section {
+                min-width: 100%;
+                background-color: $bg-light;
+
+                @media (min-width: 800px) {
+                    min-width: 300px;
+                    border-top-right-radius: 20px;
+                    border-bottom-right-radius: 20px;
+                }
+
+                form {
+                    padding: 20px;
+
+                    .title {
+                        color: black;
+                        font-size: 1.25rem;
+                        font-weight: 700;
+                    }
+
+                    .subTitle {
+                        color: black;
+                        font-size: 0.875rem;
+                    }
+
+                    .formLabel {
+                        margin-top: 5px;
+                        font-size: 0.75rem;
+                        color: #718096;
+                    }
+
+                    .centerInput {
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 5px;
+                    }
+
+                    .formInput {
+                        width: 100%;
+                        height: 100%;
+                        padding: 0.5rem 0.5rem;
+                        font-size: 0.875rem;
+                        line-height: 1.25rem;
+                        color: #374151;
+                        background-color: #fff;
+                        background-clip: padding-box;
+                        border: 1px solid #d2d6dc;
+                        border-radius: 0.25rem;
+                        transition: border-color 0.15s ease-in-out,
+                            box-shadow 0.15s ease-in-out;
+                    }
+
+                    .formInput:focus {
+                        outline: none;
+                        border-color: black;
+                    }
+
+                    .formInput::placeholder {
+                        color: #9ca3af;
+                        font-family: Consolas, Menlo, Monaco, Lucida Console,
+                            Liberation Mono, DejaVu Sans Mono,
+                            Bitstream Vera Sans Mono, Courier New, monospace,
+                            serif;
+                    }
+
+                    .formInput:-ms-input-placeholder {
+                        color: #9ca3af;
+                    }
+
+                    .formInput::-ms-input-placeholder {
+                        color: #9ca3af;
+                    }
+
+                    .formButton {
+                        display: flex;
+                        height: 2.5rem;
+                        width: 80%;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 0.375rem;
+                        border: 1px solid black;
+                        font-size: 0.875rem;
+                        transition: all 0.2s ease-in-out;
+                        outline: none;
+                        background-color: black;
+                        color: white;
+                    }
+
+                    .formButton:hover {
+                        background-color: white;
+                        color: black;
+                        cursor: pointer;
+                    }
+
+                    .embeddedUrl {
+                        color: #393d44;
+                        font-size: 0.875rem;
+                        font-weight: 800;
+                        text-decoration: underline;
+                    }
+
+                    .embeddedUrl:hover {
+                        color: black;
+                        font-weight: 900;
+                        font-size: 0.95rem;
+                    }
+
+                    .fullWidth {
+                        width: 80%;
+                    }
+
+                    .loading {
+                        display: inline-flex;
+                        align-items: center;
+                    }
+
+                    .loading .spacer {
+                        margin-right: 2px;
+                    }
+
+                    .loading span {
+                        animation-name: blink;
+                        animation-duration: 1.4s;
+                        animation-iteration-count: infinite;
+                        animation-fill-mode: both;
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        display: inline-block;
+                        margin: 0 1px;
+                    }
+
+                    .loading span:nth-of-type(2) {
+                        animation-delay: 0.2s;
+                    }
+
+                    .loading span:nth-of-type(3) {
+                        animation-delay: 0.4s;
+                    }
+
+                    @keyframes blink {
+                        0% {
+                            opacity: 0.2;
+                        }
+
+                        20% {
+                            opacity: 1;
+                        }
+
+                        100% {
+                            opacity: 0.2;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
