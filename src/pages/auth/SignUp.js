@@ -5,8 +5,10 @@ import SignUpForm from '../../shared/components/SignUpForm';
 
 export default function SignUp() {
     return (
-        <div className="AppPadding">
-            <Logo />
+        <div id="auth-container">
+            <div className="logo-container">
+                <Logo />
+            </div>
             <SignUpForm onSubmit={() => {}} />
         </div>
     );

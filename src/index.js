@@ -5,7 +5,7 @@ import {
     Routes as Switch,
     Route,
 } from 'react-router-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
 import SignIn from './pages/auth/SignIn';
 import SignUp from './pages/auth/SignUp';

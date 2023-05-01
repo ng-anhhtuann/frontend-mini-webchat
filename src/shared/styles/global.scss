@@ -1,6 +1,6 @@
 @import 'src/assets/scss/variables';
 
-// SIGN IN PAGE
+// SIGN IN/UP PAGE
 #auth-container {
     min-height: 100vh;
     background-color: $bg-main;
@@ -35,14 +35,14 @@
                 background-color: $bg-light;
 
                 @media (min-width: 800px) {
-                    min-width: 300px;
+                    min-width: 400px;
                     border-top-left-radius: 20px;
                     border-bottom-left-radius: 20px;
                 }
 
                 img {
                     max-height: 300px;
-                    min-width: 100%;
+                    min-width: 300px;
                 }
             }
 
