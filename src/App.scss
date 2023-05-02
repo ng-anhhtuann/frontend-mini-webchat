@@ -7,16 +7,19 @@ body {
 
 .App {
     display: flex;
-    min-height: 80vh;
+    min-height: 100vh;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 
     .image-welcome {
-        max-width: 500px;
+        max-width: 400px;
     }
 
     .App-name {
+        display: flex;
+        justify-content: center;
+
         color: white;
         padding-left: 20px;
         position: absolute;
@@ -24,6 +27,13 @@ body {
         left: 0;
         font-size: x-large;
         font-weight: bolder;
+
+        p {
+            font-weight: lighter;
+            color: aqua;
+            margin: 0;
+            padding: 5px;
+        }
     }
 
     .title {

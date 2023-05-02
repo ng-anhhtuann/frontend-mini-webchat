@@ -8,7 +8,9 @@ import Footer from './shared/components/Footer';
 function App() {
     return (
         <div className="App">
-            <p className="App-name">Chat app</p>
+            <p className="App-name">
+                Siuuuu Chat<p>app</p>
+            </p>
             <div id="logo-container">
                 <Logo isSpin={false} />
             </div>
