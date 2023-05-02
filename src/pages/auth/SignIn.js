@@ -1,14 +1,15 @@
 import React from 'react';
-import "../../App.css"
-import Logo from '../../shared/components/Logo'
+import '../../App.scss';
+import Logo from '../../shared/components/Logo';
 import SignInForm from '../../shared/components/SignInForm';
-
+import '../../shared/styles/global.scss';
 export default function SignIn() {
     return (
-        <div className="App">
-            <Logo />
-            <SignInForm onSubmit={()=>{}}/>
+        <div id="auth-container">
+            <div className="logo-container">
+                <Logo />
+            </div>
+            <SignInForm onSubmit={() => {}} />
         </div>
-    )
+    );
 }
-
