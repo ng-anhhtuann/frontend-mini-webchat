@@ -1,2 +1,2 @@
 # frontend-mini-webchat
-Mini webchat concept using SpringBoot injection addition to WebSocket
+Mini webchat client-side concept using SpringBoot injection addition to WebSocket
