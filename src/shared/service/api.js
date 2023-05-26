@@ -5,7 +5,7 @@ const token = sessionStorage.getItem('token');
 
 // Create an instance of axios with the desired configuration
 const API = axios.create({
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'https://chat-server.herokuapp.com',
     headers: {
         Accept: 'application/json',
         // Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
