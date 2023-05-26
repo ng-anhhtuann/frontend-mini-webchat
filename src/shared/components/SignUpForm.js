@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/global.scss';
 import signUpImage from '../../assets/images/sign_up.svg';
 import { Input, Text, Button, Footer } from './index';
+import AuthService from '../service/authService';
 export default function SignUpForm({ onSubmit }) {
+    const [userName, setUserName] = useState('');
+    const [mail, setMail] = useState('');
+    const [nameDisplay, setNameDisplay] = useState('');
+    const [password, setPassword] = useState('');
+    const [retypePassword, setRetypePassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = {
+            mail,
+            userName,
+            nameDisplay,
+            password,
+        };
+
+        if (password !== retypePassword) {
+            console.log('Wrong password !!!');
+            return;
+        }
+        
+        AuthService.register(data)
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <div id="auth-card">
             <div>
@@ -17,22 +47,37 @@ export default function SignUpForm({ onSubmit }) {
                             text={'please provide all required details below'}
                         />
                         <Input
-                            label="email address"
+                            label="email"
                             id="email"
                             name="email"
-                            type="email"
+                            type="text"
                             placeholder="username@gmail.com"
                             autoComplete="email"
                             htmlFor="email"
+                            value={mail}
+                            onChange={(e) => setMail(e.target.value)}
                         />
                         <Input
                             label="username"
                             id="username"
                             name="username"
                             type="text"
-                            placeholder="Username_123"
+                            placeholder="Username"
                             autoComplete="username"
                             htmlFor="username"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
+                        <Input
+                            label="name display"
+                            id="name-display"
+                            name="name-display"
+                            type="text"
+                            placeholder="Username_123"
+                            autoComplete="name-display"
+                            htmlFor="name-display"
+                            value={nameDisplay}
+                            onChange={(e) => setNameDisplay(e.target.value)}
                         />
                         <Input
                             label="password"
@@ -40,6 +85,8 @@ export default function SignUpForm({ onSubmit }) {
                             name="password"
                             type="password"
                             htmlFor="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <Input
                             label="retype password"
@@ -47,13 +94,10 @@ export default function SignUpForm({ onSubmit }) {
                             name="re-password"
                             type="password"
                             htmlFor="re-password"
+                            value={retypePassword}
+                            onChange={(e) => setRetypePassword(e.target.value)}
                         />
-                        <Button
-                            text="sign up"
-                            onClick={() => {
-                                alert('sign up!');
-                            }}
-                        />
+                        <Button text="sign up" onClick={handleSubmit} />
                         <Footer
                             url="/signin"
                             embeddedUrl="sign in"
