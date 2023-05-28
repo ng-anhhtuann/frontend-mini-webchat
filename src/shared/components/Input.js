@@ -7,6 +7,8 @@ export default function Input({
     name,
     type,
     htmlFor,
+    onChange,
+    value,
     placeholder = '',
     autoComplete = false,
 }) {
@@ -24,6 +26,8 @@ export default function Input({
                     placeholder={placeholder}
                     autoComplete={autoComplete ? 'email' : ''}
                     className="formInput"
+                    onChange={onChange}
+                    value={value}
                 />
             </div>
         </div>
