@@ -4,7 +4,7 @@ import { Footer, Button, Input, Text } from './index';
 import loginImage from '../../assets/images/login.svg';
 import AuthService from '../service/authService';
 import Toast from './Toast'
-
+import Loader from './Loader'
 export default function SignInForm({ onSubmit }) {
     const [userName, setUserName] = useState('chienbinh15650');
     const [password, setPassword] = useState('aaa');
