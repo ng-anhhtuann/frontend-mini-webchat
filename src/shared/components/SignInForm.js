@@ -3,9 +3,14 @@ import '../styles/global.scss';
 import { Footer, Button, Input, Text } from './index';
 import loginImage from '../../assets/images/login.svg';
 import AuthService from '../service/authService';
+import Toast from './Toast'
+
 export default function SignInForm({ onSubmit }) {
     const [userName, setUserName] = useState('chienbinh15650');
     const [password, setPassword] = useState('aaa');
+    const [isNotify, setIsNotify] = useState(false);
+    const [textNotify, setTextNotify] = useState('');
+    const [typeNotify, setTypeNotify] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,10 +20,14 @@ export default function SignInForm({ onSubmit }) {
         };
         AuthService.login(data)
             .then((data) => {
-                console.log(data);
+                setTypeNotify('success')
+                setTextNotify(data.message);
+                return setIsNotify(true);
             })
             .catch((err) => {
-                console.log(err);
+                setTypeNotify('error')
+                setTextNotify(err);
+                return setIsNotify(true);
             });
     };
     return (
@@ -27,7 +36,7 @@ export default function SignInForm({ onSubmit }) {
                 <div id="image-section">
                     <img src={loginImage} alt="Login" />
                 </div>
-
+                <Toast isNotify={isNotify} text={textNotify} type={typeNotify} />
                 <div id="form-section">
                     <form onSubmit={onSubmit} className="formContainer">
                         <Text isSub={false} text={'sign in'} />
