@@ -3,12 +3,17 @@ import '../styles/global.scss';
 import signUpImage from '../../assets/images/sign_up.svg';
 import { Input, Text, Button, Footer } from './index';
 import AuthService from '../service/authService';
+import Toast from './Toast'
+
 export default function SignUpForm({ onSubmit }) {
     const [userName, setUserName] = useState('');
     const [mail, setMail] = useState('');
     const [nameDisplay, setNameDisplay] = useState('');
     const [password, setPassword] = useState('');
     const [retypePassword, setRetypePassword] = useState('');
+    const [isNotify, setIsNotify] = useState(false);
+    const [textNotify, setTextNotify] = useState('');
+    const [typeNotify, setTypeNotify] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,10 +31,14 @@ export default function SignUpForm({ onSubmit }) {
         
         AuthService.register(data)
             .then((data) => {
-                console.log(data);
+                setTypeNotify('success')
+                setTextNotify(data.message);
+                return setIsNotify(true);
             })
             .catch((err) => {
-                console.log(err);
+                setTypeNotify('error')
+                setTextNotify(err);
+                return setIsNotify(true);
             });
     };
 
@@ -39,7 +48,7 @@ export default function SignUpForm({ onSubmit }) {
                 <div id="image-section">
                     <img className="mt-3" src={signUpImage} alt="SignUp" />
                 </div>
-
+                <Toast isNotify={isNotify} text={textNotify} type={typeNotify} />
                 <div id="form-section">
                     <form onSubmit={onSubmit} className="formContainer">
                         <Text isSub={false} text={'sign up'} />
