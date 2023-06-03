@@ -10,13 +10,17 @@ import App from './App';
 import SignIn from './pages/auth/SignIn';
 import SignUp from './pages/auth/SignUp';
 import reportWebVitals from './reportWebVitals';
-
+import Chat from './pages/chat/Chat';
+import ProtectedRoute from './shared/components/Router/ProtectedRoute';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Router>
             <Switch>
-                <Route exact path="/" element={<App />} />
+                <Route path="/" element={<App />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route exact path="/chat" element={<Chat />} />
+                </Route>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
             </Switch>
