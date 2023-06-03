@@ -74,6 +74,12 @@ body {
     pointer-events: none;
 }
 
+.card-shadow {
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(64, 64, 64, 0.5);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(64, 64, 64, 0.5);
+    box-shadow: 0px 5px 5px 0px rgba(64, 64, 64, 0.5);
+}
+
 .AppPadding {
     display: flex;
     min-height: 100vh;
