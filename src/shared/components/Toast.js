@@ -24,7 +24,7 @@ function Toast(props) {
         <div>
             <ToastContainer
                 position="top-right"
-                autoClose={2000}
+                autoClose={1000}
                 limit={1}
                 hideProgressBar={false}
                 rtl={false}

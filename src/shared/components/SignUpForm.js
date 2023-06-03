@@ -3,6 +3,7 @@ import '../styles/global.scss';
 import signUpImage from '../../assets/images/sign_up.svg';
 import { Input, Text, Button, Footer } from './index';
 import AuthService from '../service/authService';
+import { useNavigate } from 'react-router-dom';
 import Toast from './Toast';
 
 export default function SignUpForm({ onSubmit }) {
@@ -14,6 +15,7 @@ export default function SignUpForm({ onSubmit }) {
     const [isNotify, setIsNotify] = useState(false);
     const [textNotify, setTextNotify] = useState('');
     const [typeNotify, setTypeNotify] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,6 +43,15 @@ export default function SignUpForm({ onSubmit }) {
                 return setIsNotify(true);
             });
     };
+
+    if (isNotify) {
+        setTimeout(() => {
+            setIsNotify(false);
+            if (typeNotify === 'success') {
+                navigate('/chat');
+            }
+        }, 2000);
+    }
 
     return (
         <div id="auth-card">

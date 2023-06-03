@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/global.scss';
 import { Footer, Button, Input, Text } from './index';
 import loginImage from '../../assets/images/login.svg';
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../service/authService';
 import Toast from './Toast';
 
@@ -11,6 +12,7 @@ export default function SignInForm({ onSubmit }) {
     const [isNotify, setIsNotify] = useState(false);
     const [textNotify, setTextNotify] = useState('');
     const [typeNotify, setTypeNotify] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,10 +29,18 @@ export default function SignInForm({ onSubmit }) {
             .catch((err) => {
                 setTypeNotify('error');
                 setTextNotify(err);
-                console.log(err);
                 return setIsNotify(true);
             });
     };
+
+    if (isNotify) {
+        setTimeout(() => {
+            setIsNotify(false);
+            if (typeNotify === 'success') {
+                navigate('/chat');
+            }
+        }, 2000);
+    }
     return (
         <div id="auth-card">
             <div>

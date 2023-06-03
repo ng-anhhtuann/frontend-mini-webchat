@@ -11,11 +11,11 @@ const baseUrls = [
 ];
 
 // Find the first available base URL
-const availableBaseUrl = baseUrls.find((url) => url);
+// const availableBaseUrl = baseUrls.find((url) => url);
 
 // Create an instance of axios with the desired configuration
 const API = axios.create({
-    baseURL: availableBaseUrl,
+    baseURL: 'https://mini-webapp-chat.azurewebsites.net',
     headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
