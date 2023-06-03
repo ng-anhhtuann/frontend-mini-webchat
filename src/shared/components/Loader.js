@@ -10,7 +10,7 @@ function Loader() {
                 padding: '40px 0',
             }}
         >
-            <SyncLoader color="#425cee"/>
+            <SyncLoader color="#425cee" />
         </div>
     );
 }

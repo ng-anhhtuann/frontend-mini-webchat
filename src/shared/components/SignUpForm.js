@@ -3,7 +3,7 @@ import '../styles/global.scss';
 import signUpImage from '../../assets/images/sign_up.svg';
 import { Input, Text, Button, Footer } from './index';
 import AuthService from '../service/authService';
-import Toast from './Toast'
+import Toast from './Toast';
 
 export default function SignUpForm({ onSubmit }) {
     const [userName, setUserName] = useState('');
@@ -28,15 +28,15 @@ export default function SignUpForm({ onSubmit }) {
             console.log('Wrong password !!!');
             return;
         }
-        
+
         AuthService.register(data)
             .then((data) => {
-                setTypeNotify('success')
+                setTypeNotify('success');
                 setTextNotify(data.message);
                 return setIsNotify(true);
             })
             .catch((err) => {
-                setTypeNotify('error')
+                setTypeNotify('error');
                 setTextNotify(err);
                 return setIsNotify(true);
             });
@@ -48,7 +48,11 @@ export default function SignUpForm({ onSubmit }) {
                 <div id="image-section">
                     <img className="mt-3" src={signUpImage} alt="SignUp" />
                 </div>
-                <Toast isNotify={isNotify} text={textNotify} type={typeNotify} />
+                <Toast
+                    isNotify={isNotify}
+                    text={textNotify}
+                    type={typeNotify}
+                />
                 <div id="form-section">
                     <form onSubmit={onSubmit} className="formContainer">
                         <Text isSub={false} text={'sign up'} />

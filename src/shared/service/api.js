@@ -1,14 +1,24 @@
 import axios from 'axios';
 
 // Get the token from session storage
-const token = sessionStorage.getItem('token');
+const token = sessionStorage.getItem('data');
+
+// Define the base URLs in the order of priority
+const baseUrls = [
+    'https://miniwebchatapp.fly.dev',
+    'https://chat-server.herokuapp.com',
+    'https://mini-webapp-chat.azurewebsites.net',
+];
+
+// Find the first available base URL
+const availableBaseUrl = baseUrls.find((url) => url);
 
 // Create an instance of axios with the desired configuration
 const API = axios.create({
-    baseURL: 'https://chat-server.herokuapp.com',
+    baseURL: availableBaseUrl,
     headers: {
         Accept: 'application/json',
-        // Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
+        Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
     },
 });
 
@@ -18,17 +28,7 @@ API.interceptors.response.use(
         return res;
     },
     (err) => {
-        // Check if the response status is not 401 (Unauthorized)
-        if (err.response.status !== 401) {
-            throw err;
-        }
-        // Handle TokenExpiredError
-        if (typeof err.response.data.error.name !== 'undefined') {
-            if (err.response.data.error.name === 'TokenExpiredError') {
-                sessionStorage.removeItem('token'); // Remove token from session storage
-                throw err;
-            }
-        }
+        throw err;
     },
 );
 
