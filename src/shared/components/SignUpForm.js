@@ -34,7 +34,7 @@ export default function SignUpForm({ onSubmit }) {
         AuthService.register(data)
             .then((data) => {
                 setTypeNotify('success');
-                setTextNotify(data.message);
+                setTextNotify(`${data.status}`);
                 return setIsNotify(true);
             })
             .catch((err) => {

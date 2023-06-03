@@ -208,3 +208,44 @@
         }
     }
 }
+
+// CHAT PAGE
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: $bg-chat;
+    height: 100%;
+    margin: 0 !important;
+
+    #navbar {
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+        height: 60px;
+        background-color: $bg-main;
+        padding: 0 10px;
+
+        #profile-menu {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+
+            img {
+                display: flex;
+                justify-content: flex-end;
+                color: white;
+
+                margin-right: 5px;
+                border-radius: 20px;
+            }
+        }
+    }
+}
