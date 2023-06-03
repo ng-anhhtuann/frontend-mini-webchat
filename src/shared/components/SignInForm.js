@@ -3,8 +3,8 @@ import '../styles/global.scss';
 import { Footer, Button, Input, Text } from './index';
 import loginImage from '../../assets/images/login.svg';
 import AuthService from '../service/authService';
-import Toast from './Toast'
-import Loader from './Loader'
+import Toast from './Toast';
+
 export default function SignInForm({ onSubmit }) {
     const [userName, setUserName] = useState('chienbinh15650');
     const [password, setPassword] = useState('aaa');
@@ -20,13 +20,14 @@ export default function SignInForm({ onSubmit }) {
         };
         AuthService.login(data)
             .then((data) => {
-                setTypeNotify('success')
-                setTextNotify(data.message);
-                return setIsNotify(true);
+                setTypeNotify('success'); //Set type for Toast
+                setTextNotify(`${data.status}`); //Set text for Toast
+                return setIsNotify(true); //Set turning on Toast
             })
             .catch((err) => {
-                setTypeNotify('error')
+                setTypeNotify('error');
                 setTextNotify(err);
+                console.log(err);
                 return setIsNotify(true);
             });
     };
@@ -36,7 +37,11 @@ export default function SignInForm({ onSubmit }) {
                 <div id="image-section">
                     <img src={loginImage} alt="Login" />
                 </div>
-                <Toast isNotify={isNotify} text={textNotify} type={typeNotify} />
+                <Toast
+                    isNotify={isNotify}
+                    text={textNotify}
+                    type={typeNotify}
+                />
                 <div id="form-section">
                     <form onSubmit={onSubmit} className="formContainer">
                         <Text isSub={false} text={'sign in'} />
