@@ -1,6 +1,7 @@
 import { useState, Fragment } from 'react';
 import Modal from '../../../shared/components/Modal';
 import Button from '../../../shared/components/Button';
+import Friend from './Friend';
 const FriendList = () => {
     const [showFriendsModal, setShowFriendsModal] = useState(false);
     const [suggestions, setSuggestions] = useState([
@@ -17,6 +18,7 @@ const FriendList = () => {
             </div>
             <hr />
             <div id="friends-box">
+                <Friend />
                 <p id="no-chat">No friends added</p>
             </div>
             {showFriendsModal && (
