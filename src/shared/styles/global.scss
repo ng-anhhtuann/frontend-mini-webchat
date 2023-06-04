@@ -222,13 +222,14 @@
     height: 100%;
     margin: 0 !important;
 
+    // NAVIGATION BAR
     #navbar {
         display: flex;
         justify-content: center;
         justify-content: space-between;
         height: 60px;
         padding: 20px;
-        background-color: $bg-main;
+        background-color: $bg-navbar;
         padding: 0 10px;
 
         #profile-menu {
@@ -272,9 +273,96 @@
         flex-grow: 1;
         overflow: auto;
         padding: 2rem 1rem;
+        background-color: white;
 
         @media (min-width: 800px) {
             flex-direction: row;
+        }
+
+        #friends {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            background-color: #fff;
+            margin-bottom: 1rem;
+
+            @media (min-width: 800px) {
+                flex-grow: 1;
+                margin-right: 2rem;
+                max-width: 250px;
+                min-width: 250px;
+                margin-bottom: 0;
+            }
+
+            #title {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 10px;
+                align-items: flex-end;
+
+                h2 {
+                    color: $txt-header;
+                }
+
+                .formButton {
+                    display: flex;
+                    height: 2rem;
+                    width: 60px;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 0.375rem;
+                    border: 1px solid black;
+                    font-size: 0.875rem;
+                    font-family: 'Montserrat', sans-serif;
+                    transition: all 0.2s ease-in-out;
+                    outline: none;
+                    background-color: black;
+                    color: white;
+                    cursor: pointer;
+                }
+            }
+
+            hr {
+                border-top: 1px solid #cfcfcf;
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            #friends-box {
+                overflow-y: auto;
+                display: flex;
+                text-align: left;
+
+                @media (min-width: 800px) {
+                    flex-direction: column;
+                }
+
+                #no-chat {
+                    padding: 10px;
+                }
+
+                .opened {
+                    background-color: #ececec;
+                }
+            }
+
+            #suggestions {
+                margin-top: 10px;
+                overflow-y: auto;
+                max-height: 300px;
+            }
+
+            .btn-success {
+                background-color: $success;
+                border: none;
+                padding: 5px;
+                width: 50px;
+                color: white;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-top: 5px;
+            }
         }
     }
 }

@@ -1,13 +1,23 @@
 import { useState, Fragment } from 'react';
 import Modal from '../../../shared/components/Modal';
+import Button from '../../../shared/components/Button';
 const FriendList = () => {
     const [showFriendsModal, setShowFriendsModal] = useState(false);
+    const [suggestions, setSuggestions] = useState([
+        'Cristano Ronaldo',
+        'Cristiano Rosiudo',
+        'CR7',
+    ]);
 
     return (
         <div id="friends" className="card-shadow">
             <div id="title">
-                <h3 className="m-0">Contacts</h3>
-                <button onClick={() => setShowFriendsModal(true)}>ADD</button>
+                <h2 className="m-0">Contacts</h2>
+                <Button onClick={() => setShowFriendsModal(true)} text="Add" />
+            </div>
+            <hr />
+            <div id="friends-box">
+                <p id="no-chat">No friends added</p>
             </div>
             {showFriendsModal && (
                 <Modal click={() => setShowFriendsModal(false)}>
@@ -19,7 +29,16 @@ const FriendList = () => {
                         <p>Find friends by typing their name below</p>
                         <input type="text" placeholder="Search..." />
                         <div id="suggestions">
-                            <h1>Friend 1</h1>
+                            {suggestions.map((user) => {
+                                return (
+                                    <div className="suggestion">
+                                        <p className="m-0">{user}</p>
+                                        <button className="btn-success">
+                                            ADD
+                                        </button>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </Fragment>
                 </Modal>
