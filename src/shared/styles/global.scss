@@ -267,6 +267,7 @@
         }
     }
 
+    // CSS for FriendList and Messenger component
     #chat-wrap {
         display: flex;
         flex-direction: column;
@@ -278,7 +279,7 @@
         @media (min-width: 800px) {
             flex-direction: row;
         }
-
+        // CSS for FriendList component
         #friends {
             display: flex;
             flex-direction: column;
@@ -320,12 +321,6 @@
                     color: white;
                     cursor: pointer;
                 }
-            }
-
-            hr {
-                border-top: 1px solid #cfcfcf;
-                width: 100%;
-                margin-bottom: 0;
             }
 
             #friends-box {
@@ -378,27 +373,6 @@
                 }
             }
 
-            #suggestions {
-                margin-top: 10px;
-                overflow-y: auto;
-                max-height: 300px;
-            }
-
-            .online-status {
-                display: inline-block;
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-            }
-
-            .online {
-                background-color: green;
-            }
-
-            .offline {
-                background-color: red;
-            }
-
             .btn-success {
                 background-color: $success;
                 border: none;
@@ -410,6 +384,67 @@
                 font-weight: 600;
                 margin-top: 5px;
             }
+        }
+
+        #messenger {
+            #chatter {
+                overflow-y: auto;
+                display: flex;
+                text-align: left;
+                margin-top: 10px;
+                justify-items: center;
+                justify-content: space-between;
+
+                h3 {
+                    margin: 0 10px 0 0;
+                }
+
+                .chatter-info {
+                    display: flex;
+                    margin-right: 10px;
+                    min-width: 80px;
+                    padding: 10px;
+                }
+
+                .fa-icon {
+                    display: flex;
+                    margin-right: 10px;
+                    min-width: 80px;
+                    padding: 10px;
+                }
+
+                #chatter-status {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+
+        hr {
+            border-top: 1px solid #cfcfcf;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        #suggestions {
+            margin-top: 10px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .online-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .online {
+            background-color: green;
+        }
+
+        .offline {
+            background-color: red;
         }
     }
 }
