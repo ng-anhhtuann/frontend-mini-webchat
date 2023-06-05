@@ -1,6 +1,6 @@
 import { useState, Fragment } from 'react';
-import Modal from '../../../shared/components/Modal';
-import Button from '../../../shared/components/Button';
+import Modal from '../Modal';
+import Button from '../Button';
 import Friend from './Friend';
 const FriendList = () => {
     const [showFriendsModal, setShowFriendsModal] = useState(false);
