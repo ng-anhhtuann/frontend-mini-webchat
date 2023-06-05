@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 const ProtectedRoute = () => {
     const isAuthenticated = sessionStorage.getItem('token');
 
-    // Redirect to landing page based on the authentication and role
+    // Redirect to landing page based on the authentication
     if (!isAuthenticated) {
         return <Navigate to="/" />;
     }

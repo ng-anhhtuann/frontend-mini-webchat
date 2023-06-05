@@ -1,7 +1,10 @@
+import ChatHeader from './ChatHeader';
+
 const Messenger = () => {
     return (
         <div id="messenger" className="card-shadow">
-            <h2>Messenger </h2>
+            <ChatHeader />
+            <hr />
         </div>
     );
 };
