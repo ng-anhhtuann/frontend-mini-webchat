@@ -279,6 +279,7 @@
         @media (min-width: 800px) {
             flex-direction: row;
         }
+
         // CSS for FriendList component
         #friends {
             display: flex;
@@ -386,7 +387,17 @@
             }
         }
 
+        // CSS for Messenger component
         #messenger {
+            width: 100%;
+            display: flex;
+
+            #messenger-wrap {
+                width: 100%;
+                background-color: white;
+                justify-content: space-between;
+            }
+            // CSS for ChatHeader component
             #chatter {
                 overflow-y: auto;
                 display: flex;
@@ -418,6 +429,88 @@
                     align-items: center;
                 }
             }
+
+            // CSS for MessageBox component
+            #msg-box {
+                scroll-behavior: auto;
+                overflow-y: scroll;
+                flex-grow: 2;
+                height: 85%;
+                margin-bottom: 10px;
+
+                @media screen {
+                }
+                //CSS for Message component
+                .creator {
+                    justify-content: flex-end;
+                }
+
+                .mb-5 {
+                    margin-bottom: 5px;
+                }
+
+                .mb-10 {
+                    margin-bottom: 10px;
+                }
+
+                .message {
+                    display: flex;
+                    padding-right: 5px;
+                    text-align: left;
+
+                    p {
+                        word-wrap: break-word;
+                        word-break: break-word;
+                    }
+
+                    & > div {
+                        border-radius: 20px;
+                    }
+
+                    .owner {
+                        background-color: $bg-main;
+                        color: white;
+                        padding: 10px;
+                    }
+
+                    .other-person {
+                        background-color: #f5f6f8;
+                        padding: 10px;
+                    }
+
+                    .dots {
+                        margin: -5px 0 3px 0;
+                    }
+
+                    img {
+                        max-width: 200px;
+                    }
+                }
+            }
+
+            // CSS for MessageInput component
+            #input-container {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                box-sizing: border-box;
+
+                #message-input {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    border-radius: 5px;
+                }
+                input {
+                    height: 50px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-right: 0.5rem;
+                    border: 5px solid rgb(255, 197, 250);
+                    border-radius: 15px;
+                }
+            }
         }
 
         hr {
@@ -445,6 +538,13 @@
 
         .offline {
             background-color: red;
+        }
+    }
+    #chat-wrap > div {
+        #messenger-wrap {
+            width: 100%;
+            background-color: white;
+            justify-content: space-between;
         }
     }
 }
