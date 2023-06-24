@@ -6,8 +6,7 @@ const token = sessionStorage.getItem('data');
 // Define the base URLs in the order of priority
 const baseUrls = [
     'https://miniwebchatapp.fly.dev',
-    'https://chat-server.herokuapp.com',
-    'https://mini-webapp-chat.azurewebsites.net',
+    'https://mini-webchat-app-server.azurewebsites.net',
 ];
 
 // Find the first available base URL
@@ -15,7 +14,7 @@ const baseUrls = [
 
 // Create an instance of axios with the desired configuration
 const API = axios.create({
-    baseURL: 'https://mini-webapp-chat.azurewebsites.net',
+    baseURL: 'https://mini-webchat-app-server.azurewebsites.net',
     headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
