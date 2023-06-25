@@ -23,7 +23,7 @@ export default function SignInForm({ onSubmit }) {
         AuthService.login(data)
             .then((data) => {
                 setTypeNotify('success'); //Set type for Toast
-                setTextNotify(`${data.status}`); //Set text for Toast
+                setTextNotify(`Login successfully!`); //Set text for Toast
                 return setIsNotify(true); //Set turning on Toast
             })
             .catch((err) => {
