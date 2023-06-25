@@ -10,7 +10,8 @@ function App() {
     const navigate = useNavigate();
     useEffect(() => {
         const userIdSession = sessionStorage.getItem('user');
-        if ( userIdSession !== null){
+        const tokenSession = sessionStorage.getItem('token');
+        if ( userIdSession !== null && tokenSession !== null ) {
             navigate('chat');
         }
     }, [navigate])
