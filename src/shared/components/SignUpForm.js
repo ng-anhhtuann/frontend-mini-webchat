@@ -27,14 +27,15 @@ export default function SignUpForm({ onSubmit }) {
         };
 
         if (password !== retypePassword) {
-            console.log('Wrong password !!!');
-            return;
+            setTypeNotify('error');
+            setTextNotify(`Retype the same password pls!`);
+            return setIsNotify(true);
         }
 
         AuthService.register(data)
-            .then((data) => {
+            .then((res) => {
                 setTypeNotify('success');
-                setTextNotify(`${data.status}`);
+                setTextNotify(`SignUp successfully!`);
                 return setIsNotify(true);
             })
             .catch((err) => {
