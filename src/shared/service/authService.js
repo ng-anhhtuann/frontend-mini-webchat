@@ -1,10 +1,10 @@
 import API from './api';
 
 const AuthService = {
-    login: (data) => {
-        return API.post('login', data)
+    login: (e) => {
+        return API.post('login', e)
             .then(({ data }) => {
-                setHeadersAndStorage(data);
+                setHeadersAndStorage(data.data);
                 return data;
             })
             .catch((err) => {
@@ -13,10 +13,10 @@ const AuthService = {
             });
     },
 
-    register: (data) => {
-        return API.post('signup', data)
+    register: (e) => {
+        return API.post('signup', e)
             .then(({ data }) => {
-                setHeadersAndStorage(data);
+                setHeadersAndStorage(data.data);
                 return data;
             })
             .catch((err) => {
@@ -26,10 +26,10 @@ const AuthService = {
     },
 };
 
-const setHeadersAndStorage = ({ user, data }) => {
-    API.defaults.headers['Authorization'] = `Bearer ${data}`;
-    sessionStorage.setItem('user', JSON.stringify(user)); // Set user in session storage
-    sessionStorage.setItem('token', data); // Set token in session storage
+const setHeadersAndStorage = ({ id, token }) => {
+    API.defaults.headers['Authorization'] = `Bearer ${token}`;
+    sessionStorage.setItem('user', id); // Set user in session storage
+    sessionStorage.setItem('token', token); // Set token in session storage
 };
 
 export default AuthService;

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import './shared/styles/global.scss';
 import welcome from './assets/images/welcome.svg';
 import Text from './shared/components/Text';
 import Logo from './shared/components/Logo';
 import Footer from './shared/components/Footer';
+import { useNavigate } from 'react-router-dom';
 function App() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userIdSession = sessionStorage.getItem('user');
+        const tokenSession = sessionStorage.getItem('token');
+        if ( userIdSession !== null && tokenSession !== null ) {
+            navigate('chat');
+        }
+    }, [navigate])
+    
     return (
         <div className="App">
             <p className="App-name">
