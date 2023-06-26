@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Get the token from session storage
-const token = sessionStorage.getItem('data');
+const token = sessionStorage.getItem('token');
 
 // Define the base URLs in the order of priority
 const baseUrls = [
