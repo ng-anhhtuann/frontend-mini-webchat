@@ -59,33 +59,28 @@ export default function SignInForm({ onSubmit }) {
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
             />
-        )
-    }, [userName])
+        );
+    }, [userName]);
 
     const passwordInput = useMemo(() => {
         return (
-          <Input
-            label="password"
-            id="password"
-            name="password"
-            type="password"
-            htmlFor="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <Input
+                label="password"
+                id="password"
+                name="password"
+                type="password"
+                htmlFor="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
         );
-      }, [password]);
+    }, [password]);
 
-      const toast = useMemo(() => {
+    const toast = useMemo(() => {
         return (
-          <Toast
-            isNotify={isNotify}
-            text={textNotify}
-            type={typeNotify}
-          />
+            <Toast isNotify={isNotify} text={textNotify} type={typeNotify} />
         );
-      }, [isNotify, textNotify, typeNotify]);
-
+    }, [isNotify, textNotify, typeNotify]);
 
     return (
         <div id="auth-card">

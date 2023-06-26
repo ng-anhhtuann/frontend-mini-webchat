@@ -11,11 +11,11 @@ function App() {
     useEffect(() => {
         const userIdSession = sessionStorage.getItem('user');
         const tokenSession = sessionStorage.getItem('token');
-        if ( userIdSession !== null && tokenSession !== null ) {
+        if (userIdSession !== null && tokenSession !== null) {
             navigate('chat');
         }
-    }, [navigate])
-    
+    }, [navigate]);
+
     return (
         <div className="App">
             <p className="App-name">

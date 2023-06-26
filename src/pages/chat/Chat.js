@@ -11,10 +11,10 @@ const Chat = () => {
     useEffect(() => {
         const userIdSession = sessionStorage.getItem('user');
         const tokenSession = sessionStorage.getItem('token');
-        if ( userIdSession === null || tokenSession === null) {
+        if (userIdSession === null || tokenSession === null) {
             navigate('/');
         }
-    }, [navigate])
+    }, [navigate]);
 
     return (
         <div id="chat-container">

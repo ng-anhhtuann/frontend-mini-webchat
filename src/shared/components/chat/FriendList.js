@@ -2,13 +2,17 @@ import { useState, Fragment } from 'react';
 import Modal from '../Modal';
 import Button from '../Button';
 import Friend from './Friend';
+import ChatService from '../../service/chatService';
 const FriendList = () => {
     const [showFriendsModal, setShowFriendsModal] = useState(false);
-    const [suggestions, setSuggestions] = useState([
-        'Cristano Ronaldo',
-        'Cristiano Rosiudo',
-        'CR7',
-    ]);
+    const [suggestions, setSuggestions] = useState([]);
+    const id = sessionStorage.user;
+
+    const searchFriends = (e) => {
+        ChatService.searchFriends(id, e.target.value).then((res) =>
+            setSuggestions(res.data),
+        );
+    };
 
     return (
         <div id="friends" className="card-shadow">
@@ -29,12 +33,18 @@ const FriendList = () => {
 
                     <Fragment key="body">
                         <p>Find friends by typing their name below</p>
-                        <input type="text" placeholder="Search..." />
+                        <input
+                            type="text"
+                            onInput={(e) => searchFriends(e)}
+                            placeholder="Search..."
+                        />
                         <div id="suggestions">
                             {suggestions.map((user) => {
                                 return (
-                                    <div className="suggestion">
-                                        <p className="m-0">{user}</p>
+                                    <div key={user.id} className="suggestion">
+                                        <p className="m-0">
+                                            {user.nameDisplay}
+                                        </p>
                                         <button className="btn-success">
                                             ADD
                                         </button>
