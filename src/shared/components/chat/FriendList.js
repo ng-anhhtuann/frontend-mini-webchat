@@ -3,6 +3,7 @@ import Modal from '../Modal';
 import Button from '../Button';
 import Friend from './Friend';
 import ChatService from '../../service/chatService';
+
 const FriendList = () => {
     const [showFriendsModal, setShowFriendsModal] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
