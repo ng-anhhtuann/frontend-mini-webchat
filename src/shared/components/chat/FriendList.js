@@ -15,6 +15,12 @@ const FriendList = () => {
         );
     };
 
+    const friend = {
+        name: "bảy chọ",
+        avatar: "https://www.theportugalnews.com/uploads/news/1200/Cristiano_Ronaldo_2018__cropped_.jpg",
+        lastMsg: "chào em anh là bảy chọ đến từ bồ đào nha"
+    }
+
     return (
         <div id="friends" className="card-shadow">
             <div id="title">
@@ -23,7 +29,7 @@ const FriendList = () => {
             </div>
             <hr />
             <div id="friends-box">
-                <Friend />
+                <Friend friend={friend}/>
                 <p id="no-chat">No friends added</p>
             </div>
             {showFriendsModal && (

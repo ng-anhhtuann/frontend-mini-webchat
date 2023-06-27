@@ -1,18 +1,18 @@
 import React from 'react';
 
-const Friend = ({ chat, click }) => {
+const Friend = ({ chat, click , friend}) => {
     return (
-        <div onClick={click} className={`friend-list`}>
+        <div onClick={click} className={`friend`}>
             <div>
                 <img
                     width="40"
                     height="40"
-                    src="https://us-tuna-sounds-images.voicemod.net/11c6dbb2-c80d-4ed2-a967-7de8e7ef3e0f-1674929671717.jpg"
-                    alt="User avatar"
+                    src={friend.avatar}
+                    alt="Friend avatar"
                 />
                 <div className="friend-info">
-                    <h4 className="m-0">Dang Cong Nhat</h4>
-                    <h5 className="m-0">last message</h5>
+                    <h4 className="m-0">{friend.name}</h4>
+                    <h5 className="m-0">{friend.lastMsg}</h5>
                 </div>
             </div>
 
