@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoIosNotificationsOutline } from 'react-icons/io';
-import UserService from '../../service/userService';
 
-const Navbar = () => {
+const Navbar = ({userData}) => {
     const [notificationCount, setNotificationCount] = useState(0);
-    const [user, setUser] = useState({});
 
     // Function to simulate receiving a new notification
     const receiveNotification = () => {
         setNotificationCount(notificationCount + 1);
     };
-
-    const id = sessionStorage.user;
-
-    useEffect(() => {
-        UserService.userById(id).then((res) => {
-            setUser(res.data)
-        });
-    })
-    
 
     return (
         <div id="navbar" className="card-shadow">
@@ -40,10 +29,10 @@ const Navbar = () => {
                 <img
                     width="40"
                     height="40"
-                    src={user.avatar}
+                    src={userData.avatar}
                     alt="Avatar"
                 />
-                <p>{user.nameDisplay}</p>
+                <p>{userData.nameDisplay}</p>
             </div>
         </div>
     );
