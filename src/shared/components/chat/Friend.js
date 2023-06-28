@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Friend = ({ chat, click , friend}) => {
+const Friend = ({ chat, className, click , friend}) => {
     return (
-        <div onClick={click} className={`friend`}>
+        <div onClick={click} className={className}>
             <div>
                 <img
                     width="40"
@@ -16,9 +16,9 @@ const Friend = ({ chat, click , friend}) => {
                 </div>
             </div>
 
-            <div className="friend-status">
+            {/* <div className="friend-status">
                 <span className={`online-status online`}></span>
-            </div>
+            </div> */}
         </div>
     );
 };

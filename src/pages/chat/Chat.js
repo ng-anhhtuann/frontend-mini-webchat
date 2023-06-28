@@ -5,9 +5,11 @@ import Messenger from '../../shared/components/Chat/Messenger';
 import FriendList from '../../shared/components/Chat/FriendList';
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../shared/service/userService';
+import ChatService from '../../shared/service/chatService';
 
 const Chat = () => {
     const [user, setUser] = useState({});
+    const [friendList, setFriendList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,6 +21,9 @@ const Chat = () => {
             UserService.userById(userIdSession).then((res) => {
                 setUser(res.data)
             });
+            ChatService.getMsgFriendList(userIdSession).then((res) => {
+                setFriendList(res.data)
+            })
         }
     }, [navigate]);
 
@@ -26,7 +31,7 @@ const Chat = () => {
         <div id="chat-container">
             <Navbar userData={user}/>
             <div id="chat-wrap">
-                <FriendList />
+                <FriendList friendList={friendList} />
                 <Messenger />
             </div>
         </div>
