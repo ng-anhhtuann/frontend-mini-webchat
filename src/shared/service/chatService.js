@@ -113,6 +113,17 @@ const ChatService = {
             console.log(err);
             throw err.response.data.data;
         })
+    },
+
+    getMsgFriendList: (id) => {
+        return API.get(`get-msg-friend-list/${id}`)
+        .then(({data}) => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+            throw err.response.data.data;
+        })
     }
 
 };
