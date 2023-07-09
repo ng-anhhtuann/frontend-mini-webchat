@@ -285,7 +285,7 @@
             display: flex;
             flex-direction: column;
             padding: 15px;
-            background-color: #ece3e3;
+            background-color: #f4eeee;
             margin-bottom: 1rem;
             border-radius: 10px;
 
@@ -335,9 +335,8 @@
                 text-align: left;
                 align-items: center;
                 justify-content: center;
-                height: 100%;
+                max-height: fit-content;
                 margin-top: 1rem;
-                // background-color: #acb6c7;
 
                 @media (min-width: 800px) {
                     flex-direction: column;
@@ -346,10 +345,12 @@
                 .friend-list {
                     display: flex;
                     justify-content: space-between;
-                    padding: 15px;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
                     cursor: pointer;
                     flex-direction: column;
                     min-width: fit-content;
+                    width: 100%;
 
                     @media (min-width: 800px) {
                         flex-direction: row;
