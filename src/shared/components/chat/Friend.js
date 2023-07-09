@@ -11,8 +11,8 @@ const Friend = ({ chat, className, click , friend}) => {
                     alt="Friend avatar"
                 />
                 <div className="friend-info">
-                    <h4 className="m-0">{friend.name}</h4>
-                    <h5 className="m-0">{friend.lastMsg}</h5>
+                    <h4 className="m-0">{friend.nameDisplay}</h4>
+                    <h5 className="m-0">{friend.lastMsg ? friend.lastMsg : "Click here to start a chat"}</h5>
                 </div>
             </div>
 
