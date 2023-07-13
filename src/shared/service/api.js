@@ -4,17 +4,17 @@ import axios from 'axios';
 const token = sessionStorage.getItem('token');
 
 // Define the base URLs in the order of priority
-// const baseUrls = [
-//     'https://miniwebchatapp.fly.dev',
-//     'https://mini-webchat-app-server.azurewebsites.net',
-// ];
+const baseUrls = [
+    'https://miniwebchatapp.fly.dev',
+    'https://mini-webchat-app-server.azurewebsites.net',
+];
 
 // Find the first available base URL
 // const availableBaseUrl = baseUrls.find((url) => url);
 
 // Create an instance of axios with the desired configuration
 const API = axios.create({
-    baseURL: 'https://mini-webchat-app-server.azurewebsites.net',
+    baseURL: baseUrls[0],
     headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
