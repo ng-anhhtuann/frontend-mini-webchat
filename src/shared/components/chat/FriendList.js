@@ -1,4 +1,4 @@
-import { useState, Fragment, useMemo, useReducer } from 'react';
+import { useState, Fragment, useMemo } from 'react';
 import Modal from '../Modal';
 import Button from '../Button';
 import Friend from './Friend';
@@ -69,7 +69,9 @@ const FriendList = ({friendList}) => {
                 {friendList.length === 0 
                 ? (<p id="no-chat">No friends added</p>)
                 : friendList.map((item, index) => {
-                return <Friend friend={item} className={"friend-list"} key={index}/> 
+                return <Friend friend={item} className={"friend-list"} key={index} click={() => {
+                    sessionStorage.setItem('chatIndex', index);
+                }}/> 
                 })}
             </div>
             {showFriendsModal && (
