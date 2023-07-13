@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 
-const ChatHeader = ({ chat }) => {
+const ChatHeader = ({ chat, nameDisplay }) => {
     return (
         <Fragment>
             <div id="chatter">
                 <div className="chatter-info">
-                    <h3>Dang Cong Nhat</h3>
+                    <h3>{nameDisplay}</h3>
                     <div className="chatter-status">
                         <span className={`online-status offline`}></span>
                     </div>
