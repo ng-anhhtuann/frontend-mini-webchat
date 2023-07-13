@@ -10,11 +10,13 @@ import ChatService from '../../shared/service/chatService';
 const Chat = () => {
     const [user, setUser] = useState({});
     const [friendList, setFriendList] = useState([]);
+    const [currentChat, setCurrentChat] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
         const userIdSession = sessionStorage.user;
         const tokenSession = sessionStorage.token;
+        const currentIndex = sessionStorage.chatIndex;
         if (userIdSession === null || tokenSession === null) {
             navigate('/');
         } else {
@@ -23,16 +25,17 @@ const Chat = () => {
             });
             ChatService.getMsgFriendList(userIdSession).then((res) => {
                 setFriendList(res.data)
+                setCurrentChat(friendList[currentIndex])
             })
         }
-    }, [navigate]);
+    }, [friendList, navigate]);
 
     return (
         <div id="chat-container">
             <Navbar userData={user}/>
             <div id="chat-wrap">
                 <FriendList friendList={friendList} />
-                <Messenger />
+                <Messenger currentChat={currentChat}/>
             </div>
         </div>
     );
