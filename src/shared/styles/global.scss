@@ -285,7 +285,7 @@
             display: flex;
             flex-direction: column;
             padding: 15px;
-            background-color: #f4eeee;
+            background-color: #f8f8f8;
             margin-bottom: 1rem;
             border-radius: 10px;
 
@@ -327,6 +327,11 @@
                     color: white;
                     cursor: pointer;
                 }
+                .formButton:hover {
+                    background-color: white;
+                    color: black;
+                    cursor: pointer;
+                }
             }
 
             #friends-box {
@@ -350,15 +355,17 @@
                     cursor: pointer;
                     flex-direction: column;
                     min-width: fit-content;
+                    border-radius: 10px;
                     width: 100%;
-
+                
                     @media (min-width: 800px) {
                         flex-direction: row;
                     }
-
+                
                     & > div {
                         display: flex;
-
+                        margin-left: 15px;
+                
                         img {
                             display: flex;
                             align-self: center;
@@ -370,23 +377,33 @@
                             display: flex;
                             align-self: center;
                             flex-direction: column;
-
-                            h4{
-                                color: $friend-name
+                
+                            h4 {
+                                color: $friend-name;
                             }
-
-                            h5{
+                
+                            h5 {
                                 color: $friend-last-msg;
                             }
                         }
                     }
-
+                
                     .friend-status {
                         display: flex;
                         align-items: center;
                         justify-content: center;
                     }
-                }
+                
+                    &:hover {
+                        h4 {
+                            font-size: 1.2em; 
+                        }
+                    }
+                
+                    &:active {
+                        background-color: rgb(196, 196, 196); /* Change background color when clicked */
+                    }
+                }                
 
                 #no-chat {
                     padding: 10px;
