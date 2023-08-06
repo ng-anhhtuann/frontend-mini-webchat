@@ -7,8 +7,8 @@ import AuthService from '../service/authService';
 import Toast from './Toast';
 
 export default function SignInForm({ onSubmit }) {
-    const [userName, setUserName] = useState('chienbinh15650');
-    const [password, setPassword] = useState('aaa');
+    const [userName, setUserName] = useState('lord156');
+    const [password, setPassword] = useState('123');
     const [isNotify, setIsNotify] = useState(false);
     const [textNotify, setTextNotify] = useState('');
     const [typeNotify, setTypeNotify] = useState('');

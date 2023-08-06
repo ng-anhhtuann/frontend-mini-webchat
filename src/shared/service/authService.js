@@ -30,6 +30,7 @@ const setHeadersAndStorage = ({ id, token }) => {
     API.defaults.headers['Authorization'] = `Bearer ${token}`;
     sessionStorage.setItem('user', id); // Set user in session storage
     sessionStorage.setItem('token', token); // Set token in session storage
+    sessionStorage.setItem('chatIndex', 0); // Set current chat index
 };
 
 export default AuthService;
