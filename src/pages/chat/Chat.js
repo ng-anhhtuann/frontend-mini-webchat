@@ -24,14 +24,11 @@ const Chat = () => {
             return;
         }
 
-        // Load current user profile from token
         UserService.getCurrentUserProfile()
             .then((res) => {
-                // Handle response structure: { status: true, data: {...} }
                 if (res.status && res.data) {
                     const userProfile = res.data;
                     setUser(userProfile);
-                    // Store user ID and profile in session
                     sessionStorage.setItem('user', userProfile.id);
                     sessionStorage.setItem('userProfile', JSON.stringify({
                         id: userProfile.id,
@@ -41,14 +38,12 @@ const Chat = () => {
                         mail: userProfile.mail
                     }));
 
-                    // Load friend list after getting user profile
                     return ChatService.getMsgFriendList(userProfile.id);
                 } else {
                     throw new Error('Failed to get user profile');
                 }
             })
             .then((friendRes) => {
-                // Handle friend list response
                 if (friendRes) {
                     let friends = [];
                     if (friendRes.status && friendRes.data) {
@@ -59,7 +54,6 @@ const Chat = () => {
                     
                     setFriendList(friends);
                     
-                    // Set initial chat if available
                     const chatIndex = parseInt(sessionStorage.getItem('chatIndex') || '0');
                     if (friends.length > 0 && chatIndex < friends.length) {
                         setCurrentChat(friends[chatIndex]);
@@ -69,17 +63,15 @@ const Chat = () => {
             })
             .catch((err) => {
                 console.error('Error loading data:', err);
-                // If token is invalid, redirect to login
                 if (err.response?.status === 401 || err.response?.status === 403) {
                     sessionStorage.clear();
-                    navigate('/');
-                } else {
+            navigate('/');
+        } else {
                     setFriendList([]);
                     setLoading(false);
                 }
             });
 
-        // Connect to WebSocket - delay slightly to ensure token is available
         const connectWebSocket = () => {
             console.log('[Chat] Attempting to connect WebSocket...');
             const token = sessionStorage.getItem('token');
@@ -96,15 +88,12 @@ const Chat = () => {
                 (error) => {
                     console.error('[Chat] WebSocket connection failed:', error);
                     setWsConnected(false);
-                    // Don't show alert immediately - let user try to send message first
                 }
             );
         };
 
-        // Small delay to ensure everything is ready
         const wsTimeout = setTimeout(connectWebSocket, 500);
         
-        // Also check connection status periodically
         const statusInterval = setInterval(() => {
             const isConnected = socketService.isConnected();
             setWsConnected(isConnected);
@@ -114,7 +103,6 @@ const Chat = () => {
             }
         }, 5000);
 
-        // Cleanup on unmount
         return () => {
             clearTimeout(wsTimeout);
             clearInterval(statusInterval);
@@ -124,7 +112,6 @@ const Chat = () => {
 
     const handleChatSelect = (chat) => {
         setCurrentChat(chat);
-        // Store selected chat index
         const index = friendList.findIndex((f) => f.id === chat.id);
         if (index !== -1) {
             sessionStorage.setItem('chatIndex', index.toString());
@@ -174,6 +161,7 @@ const Chat = () => {
                 <Messenger 
                     currentChat={currentChat} 
                     currentUserId={user?.id || sessionStorage.getItem('user')}
+                    wsConnected={wsConnected}
                 />
             </div>
         </div>
