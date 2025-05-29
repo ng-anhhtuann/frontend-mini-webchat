@@ -23,18 +23,14 @@ export default function SignInForm({ onSubmit }) {
         };
         AuthService.login(data)
             .then((response) => {
-                // Verify token was stored
                 const token = sessionStorage.getItem('token');
                 if (!token) {
                     throw new Error('Token not stored after login');
                 }
                 
-                // After successful login, get user profile
                 return UserService.getCurrentUserProfile()
                     .then((profileResponse) => {
-                        // Backend returns { status: true, data: {...} }
                         if (profileResponse.status && profileResponse.data) {
-                            // Store user profile data
                             const userProfile = profileResponse.data;
                             sessionStorage.setItem('userProfile', JSON.stringify({
                                 id: userProfile.id,
@@ -64,10 +60,6 @@ export default function SignInForm({ onSubmit }) {
             }
         }, 2000);
     }
-
-    /**
-     * Components render preventing
-     */
 
     const userNameInput = useMemo(() => {
         return (

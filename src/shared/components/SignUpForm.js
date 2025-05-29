@@ -54,10 +54,6 @@ export default function SignUpForm({ onSubmit }) {
         }, 2000);
     }
 
-    /**
-     * Components rerender preventing
-     */
-
     const emailInput = useMemo(() => {
         return (
             <Input
