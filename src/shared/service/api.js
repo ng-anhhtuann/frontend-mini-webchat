@@ -1,32 +1,49 @@
 import axios from 'axios';
 
-// Get the token from session storage
-const token = sessionStorage.getItem('token');
-
-// Define the base URLs in the order of priority
-const baseUrls = [
-    'https://miniwebchatapp.fly.dev',
-    'https://mini-webchat-app-server.azurewebsites.net',
-];
-
-// Find the first available base URL
-// const availableBaseUrl = baseUrls.find((url) => url);
+// Define the base URL - use localhost for development, or environment variable for production
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 // Create an instance of axios with the desired configuration
 const API = axios.create({
-    baseURL: baseUrls[0],
+    baseURL: BASE_URL,
     headers: {
+        'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${token || ''}`, // Include the token in the Authorization header if available
     },
 });
 
-// Add a response interceptor
+// Request interceptor to add token dynamically
+API.interceptors.request.use(
+    (config) => {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// Response interceptor
 API.interceptors.response.use(
     (res) => {
         return res;
     },
     (err) => {
+        // Handle 401/403 unauthorized - clear session and redirect to login
+        if (err.response?.status === 401 || err.response?.status === 403) {
+            console.error('API request failed with', err.response?.status, ':', err.response?.data);
+            // Only redirect if it's a real auth error, not just a validation error
+            if (err.response?.status === 401 || 
+                (err.response?.status === 403 && err.response?.data?.data?.includes('session') || 
+                 err.response?.data?.data?.includes('token'))) {
+                console.error('Authentication failed, clearing session and redirecting to login');
+                sessionStorage.clear();
+                window.location.href = '/';
+            }
+        }
         throw err;
     },
 );
