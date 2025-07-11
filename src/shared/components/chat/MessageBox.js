@@ -3,11 +3,12 @@ import Message from './Message';
 import ChatService from '../../service/chatService';
 import socketService from '../../service/socketService';
 
-const MessageBox = ({ currentChat, currentUserId }) => {
+const MessageBox = ({ currentChat, currentUserId, wsConnected }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const messagesEndRef = useRef(null);
-    const subscriptionRef = useRef(null);
+    const userSubscriptionRef = useRef(null);
+    const roomSubscriptionRef = useRef(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -17,7 +18,6 @@ const MessageBox = ({ currentChat, currentUserId }) => {
         scrollToBottom();
     }, [messages]);
 
-    // Load messages when currentChat changes
     useEffect(() => {
         if (!currentChat || !currentUserId) {
             setMessages([]);
@@ -27,7 +27,6 @@ const MessageBox = ({ currentChat, currentUserId }) => {
         const loadMessages = async () => {
             setLoading(true);
             try {
-                // Determine if it's a user chat or room chat
                 const isRoomChat = currentChat.members && currentChat.members.length > 0;
                 let response;
 
@@ -38,7 +37,6 @@ const MessageBox = ({ currentChat, currentUserId }) => {
                 }
 
                 if (response.status && response.data) {
-                    // Reverse to show oldest first (API returns DESC)
                     setMessages(Array.isArray(response.data) ? response.data.reverse() : []);
                 }
             } catch (error) {
@@ -52,55 +50,136 @@ const MessageBox = ({ currentChat, currentUserId }) => {
         loadMessages();
     }, [currentChat, currentUserId]);
 
-    // Subscribe to WebSocket messages
     useEffect(() => {
-        if (!currentChat || !currentUserId || !socketService.isConnected()) {
+        if (!currentUserId || !wsConnected) {
+            console.log('[MessageBox] Cannot subscribe to user: no userId or WebSocket not connected', { currentUserId, wsConnected });
             return;
         }
 
-        // Unsubscribe from previous subscription
-        if (subscriptionRef.current) {
-            subscriptionRef.current.unsubscribe();
+        if (userSubscriptionRef.current) {
+            userSubscriptionRef.current.unsubscribe();
+            userSubscriptionRef.current = null;
+        }
+
+        const chatPartnerId = currentChat?.id;
+
+        const handleNewMessage = (messageData) => {
+            console.log('[MessageBox] ✅ Received WebSocket message:', messageData);
+            
+            const isForThisChat = chatPartnerId && (
+                messageData.receiverObjectId === chatPartnerId ||
+                messageData.currentSessionUserId === chatPartnerId
+            );
+
+            if (isForThisChat) {
+                setMessages((prevMessages) => {
+                    const exists = prevMessages.some((msg) => {
+                        if (msg.id && messageData.id) {
+                            return msg.id === messageData.id;
+                        }
+                        if (msg.tempId && messageData.tempId && msg.tempId === messageData.tempId) {
+                            return true;
+                        }
+                        const msgTime = msg.timestamp || msg.time || 0;
+                        const newMsgTime = messageData.timestamp || Date.now();
+                        const timeDiff = Math.abs(newMsgTime - msgTime);
+                        
+                        return (
+                            msg.content === messageData.content &&
+                            msg.currentSessionUserId === messageData.currentSessionUserId &&
+                            msg.receiverObjectId === messageData.receiverObjectId &&
+                            timeDiff < 2000
+                        );
+                    });
+                    
+                    if (exists) {
+                        console.log('[MessageBox] Duplicate message, skipping');
+                        return prevMessages;
+                    }
+                    
+                    const messageWithTimestamp = {
+                        ...messageData,
+                        timestamp: messageData.timestamp || Date.now(),
+                        tempId: messageData.tempId || `ws-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+                    };
+                    
+                    console.log('[MessageBox] ✅ Adding new message to UI');
+                    return [...prevMessages, messageWithTimestamp];
+                });
+            } else {
+                console.log('[MessageBox] Message not for this chat, ignoring', { chatPartnerId, messageData });
+            }
+        };
+
+        console.log('[MessageBox] ✅ Subscribing to private messages for user:', currentUserId);
+        userSubscriptionRef.current = socketService.subscribeToUser(currentUserId, handleNewMessage);
+
+        return () => {
+            if (userSubscriptionRef.current) {
+                userSubscriptionRef.current.unsubscribe();
+                userSubscriptionRef.current = null;
+            }
+        };
+    }, [currentUserId, currentChat?.id, wsConnected]);
+
+    useEffect(() => {
+        if (!currentChat?.id || !wsConnected) {
+            return;
         }
 
         const isRoomChat = currentChat.members && currentChat.members.length > 0;
-        const receiverId = currentChat.id;
-
-        // Subscribe to new messages
-        const handleNewMessage = (messageData) => {
-            // Only add message if it's for this chat
-            if (
-                messageData.receiverObjectId === receiverId ||
-                messageData.currentSessionUserId === receiverId
-            ) {
-                setMessages((prevMessages) => {
-                    // Check if message already exists to avoid duplicates
-                    const exists = prevMessages.some(
-                        (msg) => msg.id === messageData.id || 
-                        (msg.senderId === messageData.currentSessionUserId && 
-                         msg.content === messageData.content &&
-                         Math.abs(parseInt(msg.time) - Date.now()) < 5000)
-                    );
-                    if (exists) return prevMessages;
-                    return [...prevMessages, messageData];
-                });
-            }
-        };
-
-        if (isRoomChat) {
-            subscriptionRef.current = socketService.subscribeToChatRoom(receiverId, handleNewMessage);
-        } else {
-            subscriptionRef.current = socketService.subscribeToUser(receiverId, handleNewMessage);
+        if (!isRoomChat) {
+            return;
         }
 
-        // Cleanup subscription on unmount or chat change
+        if (roomSubscriptionRef.current) {
+            roomSubscriptionRef.current.unsubscribe();
+            roomSubscriptionRef.current = null;
+        }
+
+        const handleRoomMessage = (messageData) => {
+            console.log('[MessageBox] ✅ Received room message:', messageData);
+            setMessages((prevMessages) => {
+                const exists = prevMessages.some((msg) => {
+                    if (msg.id && messageData.id) {
+                        return msg.id === messageData.id;
+                    }
+                    const msgTime = msg.timestamp || msg.time || 0;
+                    const newMsgTime = messageData.timestamp || Date.now();
+                    const timeDiff = Math.abs(newMsgTime - msgTime);
+                    
+                    return (
+                        msg.content === messageData.content &&
+                        msg.currentSessionUserId === messageData.currentSessionUserId &&
+                        timeDiff < 2000
+                    );
+                });
+                
+                if (exists) {
+                    console.log('[MessageBox] Duplicate room message, skipping');
+                    return prevMessages;
+                }
+                
+                const messageWithTimestamp = {
+                    ...messageData,
+                    timestamp: messageData.timestamp || Date.now(),
+                    tempId: messageData.tempId || `ws-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+                };
+                
+                return [...prevMessages, messageWithTimestamp];
+            });
+        };
+
+        console.log('[MessageBox] ✅ Subscribing to room:', currentChat.id);
+        roomSubscriptionRef.current = socketService.subscribeToChatRoom(currentChat.id, handleRoomMessage);
+
         return () => {
-            if (subscriptionRef.current) {
-                subscriptionRef.current.unsubscribe();
-                subscriptionRef.current = null;
+            if (roomSubscriptionRef.current) {
+                roomSubscriptionRef.current.unsubscribe();
+                roomSubscriptionRef.current = null;
             }
         };
-    }, [currentChat, currentUserId]);
+    }, [currentChat?.id, currentChat?.members, wsConnected]);
 
     if (loading) {
         return (
@@ -113,9 +192,9 @@ const MessageBox = ({ currentChat, currentUserId }) => {
     return (
         <div id="msg-box">
             {messages.length > 0 ? (
-                messages.map((message) => (
+                messages.map((message, index) => (
                     <Message
-                        key={message.id || `${message.senderId}-${message.time}`}
+                        key={message.id || message.tempId || `msg-${index}-${message.timestamp}`}
                         message={message}
                         currentUserId={currentUserId}
                     />

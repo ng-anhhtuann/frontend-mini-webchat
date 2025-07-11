@@ -3,9 +3,10 @@ import React from 'react';
 const Message = ({ message, currentUserId }) => {
     if (!message) return null;
 
-    const isOwnMessage = message.senderId === currentUserId;
-    const messageTime = message.time 
-        ? new Date(parseInt(message.time)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const isOwnMessage = message.senderId === currentUserId || message.currentSessionUserId === currentUserId;
+    
+    const messageTime = (message.time || message.timestamp)
+        ? new Date(parseInt(message.time || message.timestamp)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         : '';
 
     return (

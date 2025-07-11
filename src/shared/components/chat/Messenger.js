@@ -2,7 +2,7 @@ import ChatHeader from './ChatHeader';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 
-const Messenger = ({ currentChat, currentUserId }) => {
+const Messenger = ({ currentChat, currentUserId, wsConnected }) => {
     const displayName = currentChat?.nameDisplay || currentChat?.name || 'Unknown User';
     
     return (
@@ -11,8 +11,16 @@ const Messenger = ({ currentChat, currentUserId }) => {
                 <div id="messenger-wrap">
                     <ChatHeader nameDisplay={displayName} />
                     <hr />
-                    <MessageBox currentChat={currentChat} currentUserId={currentUserId} />
-                    <MessageInput currentChat={currentChat} currentUserId={currentUserId} />
+                    <MessageBox 
+                        currentChat={currentChat} 
+                        currentUserId={currentUserId} 
+                        wsConnected={wsConnected}
+                    />
+                    <MessageInput 
+                        currentChat={currentChat} 
+                        currentUserId={currentUserId}
+                        wsConnected={wsConnected}
+                    />
                 </div>
             ) : (
                 <div id="centered-none-div">

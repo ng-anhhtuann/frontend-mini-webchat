@@ -33,7 +33,6 @@ const FriendList = ({ friendList, onChatSelect, currentChatId }) => {
     const searchFriends = (e) => {
         const keyword = e.target.value.trim().toLowerCase();
         if (!keyword) {
-            // Show all users if search is empty
             setSuggestions(allUsers);
             return;
         }
@@ -43,7 +42,6 @@ const FriendList = ({ friendList, onChatSelect, currentChatId }) => {
             return;
         }
         
-        // Filter from allUsers first (client-side)
         const filtered = allUsers.filter(user => 
             user.nameDisplay?.toLowerCase().includes(keyword) ||
             user.userName?.toLowerCase().includes(keyword)
@@ -52,7 +50,6 @@ const FriendList = ({ friendList, onChatSelect, currentChatId }) => {
         if (filtered.length > 0) {
             setSuggestions(filtered);
         } else {
-            // If no local results, try server search
             ChatService.searchFriends(id, keyword)
                 .then((res) => {
                     if (res.status && res.data) {
@@ -75,7 +72,6 @@ const FriendList = ({ friendList, onChatSelect, currentChatId }) => {
             setIsNotify(true);
             setTextNotify("Friend request was sent successfully");
             setTypeNotify("success");
-            // Update user status in suggestions
             setSuggestions(prev => prev.map(u => 
                 u.id === idAdd ? { ...u, status: 3 } : u
             ));
@@ -94,14 +90,12 @@ const FriendList = ({ friendList, onChatSelect, currentChatId }) => {
             setIsNotify(true);
             setTextNotify("You can now text each other");
             setTypeNotify("success");
-            // Update user status in suggestions
             setSuggestions(prev => prev.map(u => 
                 u.id === idAcp ? { ...u, status: 1 } : u
             ));
             setAllUsers(prev => prev.map(u => 
                 u.id === idAcp ? { ...u, status: 1 } : u
             ));
-            // Reload page after 2 seconds to refresh friend list
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
@@ -148,7 +142,7 @@ const FriendList = ({ friendList, onChatSelect, currentChatId }) => {
                             if (onChatSelect) {
                                 onChatSelect(item);
                             } else {
-                                sessionStorage.setItem('chatIndex', index);
+                    sessionStorage.setItem('chatIndex', index);
                             }
                         }}
                     />
