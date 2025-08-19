@@ -6,36 +6,175 @@ import FriendList from '../../shared/components/Chat/FriendList';
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../shared/service/userService';
 import ChatService from '../../shared/service/chatService';
+import socketService from '../../shared/service/socketService';
 
 const Chat = () => {
     const [user, setUser] = useState({});
     const [friendList, setFriendList] = useState([]);
-    const [currentChat, setCurrentChat] = useState({});
+    const [currentChat, setCurrentChat] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [wsConnected, setWsConnected] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const userIdSession = sessionStorage.user;
-        const tokenSession = sessionStorage.token;
-        const currentIndex = sessionStorage.chatIndex;
-        if (userIdSession === null || tokenSession === null) {
+        const tokenSession = sessionStorage.getItem('token');
+        
+        if (!tokenSession) {
             navigate('/');
-        } else {
-            UserService.userById(userIdSession).then((res) => {
-                setUser(res.data)
-            });
-            ChatService.getMsgFriendList(userIdSession).then((res) => {
-                setFriendList(res.data)
-                setCurrentChat(friendList[currentIndex])
-            })
+            return;
         }
-    }, [friendList, navigate]);
+
+        // Load current user profile from token
+        UserService.getCurrentUserProfile()
+            .then((res) => {
+                // Handle response structure: { status: true, data: {...} }
+                if (res.status && res.data) {
+                    const userProfile = res.data;
+                    setUser(userProfile);
+                    // Store user ID and profile in session
+                    sessionStorage.setItem('user', userProfile.id);
+                    sessionStorage.setItem('userProfile', JSON.stringify({
+                        id: userProfile.id,
+                        userName: userProfile.userName,
+                        nameDisplay: userProfile.nameDisplay,
+                        avatar: userProfile.avatar,
+                        mail: userProfile.mail
+                    }));
+
+                    // Load friend list after getting user profile
+                    return ChatService.getMsgFriendList(userProfile.id);
+                } else {
+                    throw new Error('Failed to get user profile');
+                }
+            })
+            .then((friendRes) => {
+                // Handle friend list response
+                if (friendRes) {
+                    let friends = [];
+                    if (friendRes.status && friendRes.data) {
+                        friends = Array.isArray(friendRes.data) ? friendRes.data : [];
+                    } else if (Array.isArray(friendRes.data)) {
+                        friends = friendRes.data;
+                    }
+                    
+                    setFriendList(friends);
+                    
+                    // Set initial chat if available
+                    const chatIndex = parseInt(sessionStorage.getItem('chatIndex') || '0');
+                    if (friends.length > 0 && chatIndex < friends.length) {
+                        setCurrentChat(friends[chatIndex]);
+                    }
+                }
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error('Error loading data:', err);
+                // If token is invalid, redirect to login
+                if (err.response?.status === 401 || err.response?.status === 403) {
+                    sessionStorage.clear();
+                    navigate('/');
+                } else {
+                    setFriendList([]);
+                    setLoading(false);
+                }
+            });
+
+        // Connect to WebSocket - delay slightly to ensure token is available
+        const connectWebSocket = () => {
+            console.log('[Chat] Attempting to connect WebSocket...');
+            const token = sessionStorage.getItem('token');
+            if (!token) {
+                console.error('[Chat] No token available for WebSocket connection');
+                return;
+            }
+            
+            socketService.connect(
+                () => {
+                    console.log('[Chat] WebSocket connected successfully');
+                    setWsConnected(true);
+                },
+                (error) => {
+                    console.error('[Chat] WebSocket connection failed:', error);
+                    setWsConnected(false);
+                    // Don't show alert immediately - let user try to send message first
+                }
+            );
+        };
+
+        // Small delay to ensure everything is ready
+        const wsTimeout = setTimeout(connectWebSocket, 500);
+        
+        // Also check connection status periodically
+        const statusInterval = setInterval(() => {
+            const isConnected = socketService.isConnected();
+            setWsConnected(isConnected);
+            if (!isConnected && !socketService.isConnecting()) {
+                console.log('[Chat] WebSocket not connected, attempting reconnect...');
+                connectWebSocket();
+            }
+        }, 5000);
+
+        // Cleanup on unmount
+        return () => {
+            clearTimeout(wsTimeout);
+            clearInterval(statusInterval);
+            socketService.disconnect();
+        };
+    }, [navigate]);
+
+    const handleChatSelect = (chat) => {
+        setCurrentChat(chat);
+        // Store selected chat index
+        const index = friendList.findIndex((f) => f.id === chat.id);
+        if (index !== -1) {
+            sessionStorage.setItem('chatIndex', index.toString());
+        }
+    };
+
+    if (loading) {
+        return (
+            <div id="chat-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <p>Loading...</p>
+            </div>
+        );
+    }
 
     return (
         <div id="chat-container">
-            <Navbar userData={user}/>
+            <Navbar userData={user} />
+            {!wsConnected && (
+                <div style={{
+                    position: 'fixed',
+                    top: '10px',
+                    right: '10px',
+                    background: '#ff4444',
+                    color: 'white',
+                    padding: '10px 15px',
+                    borderRadius: '5px',
+                    zIndex: 1000,
+                    cursor: 'pointer'
+                }} onClick={() => {
+                    socketService.retryConnection(
+                        () => setWsConnected(true),
+                        (err) => {
+                            console.error('Retry failed:', err);
+                            alert(`Connection failed: ${err.message || err}`);
+                        }
+                    );
+                }}>
+                    ⚠️ WebSocket Disconnected - Click to Retry
+                </div>
+            )}
             <div id="chat-wrap">
-                <FriendList friendList={friendList} />
-                <Messenger currentChat={currentChat}/>
+                <FriendList 
+                    friendList={friendList} 
+                    onChatSelect={handleChatSelect}
+                    currentChatId={currentChat?.id}
+                />
+                <Messenger 
+                    currentChat={currentChat} 
+                    currentUserId={user?.id || sessionStorage.getItem('user')}
+                />
             </div>
         </div>
     );
