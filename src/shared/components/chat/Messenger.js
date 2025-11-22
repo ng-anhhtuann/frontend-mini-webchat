@@ -1,23 +1,29 @@
 import ChatHeader from './ChatHeader';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
-const Messenger = ({currentChat}) => {
+
+const Messenger = ({ currentChat, currentUserId }) => {
+    const displayName = currentChat?.nameDisplay || currentChat?.name || 'Unknown User';
+    
     return (
         <div id="messenger" className="card-shadow">
-            {currentChat !== undefined 
-            ?  (<div id="messenger-wrap">
-                    <ChatHeader nameDisplay={currentChat.nameDisplay}/>
+            {currentChat ? (
+                <div id="messenger-wrap">
+                    <ChatHeader nameDisplay={displayName} />
                     <hr />
-                    <MessageBox />
-                    <MessageInput />
-                </div>)
-            :   (<div id="centered-none-div">
+                    <MessageBox currentChat={currentChat} currentUserId={currentUserId} />
+                    <MessageInput currentChat={currentChat} currentUserId={currentUserId} />
+                </div>
+            ) : (
+                <div id="centered-none-div">
                     <h1>Welcome to the chat</h1>
-                    <h1>Please add one more for starting a chat with them</h1>
-                    <h1>Once they accept, refresh the page</h1>
+                    <h1>Please select a friend to start chatting</h1>
+                    <h1>Or add a friend to begin a conversation</h1>
                     <h1>Enjoy ~</h1>
-                </div>)}
+                </div>
+            )}
         </div>
     );
 };
+
 export default Messenger;
