@@ -4,9 +4,8 @@ const AuthService = {
     login: (credentials) => {
         return API.post('/api/auth/login', credentials)
             .then(({ data }) => {
-                // Handle response structure: { status: true, data: { token: "...", id: "..." } }
                 if (data.status && data.data) {
-                    setHeadersAndStorage(data.data);
+                setHeadersAndStorage(data.data);
                 }
                 return data;
             })
@@ -20,9 +19,8 @@ const AuthService = {
     register: (userData) => {
         return API.post('/api/auth/signup', userData)
             .then(({ data }) => {
-                // Handle response structure: { status: true, data: { token: "...", id: "..." } }
                 if (data.status && data.data) {
-                    setHeadersAndStorage(data.data);
+                setHeadersAndStorage(data.data);
                 }
                 return data;
             })
@@ -35,11 +33,9 @@ const AuthService = {
 };
 
 const setHeadersAndStorage = ({ id, token }) => {
-    // Token is automatically added via interceptor, but we store it
-    sessionStorage.setItem('user', id); // Set user ID in session storage
-    sessionStorage.setItem('token', token); // Set token in session storage
-    sessionStorage.setItem('chatIndex', '0'); // Set current chat index
-    // Update API default headers
+    sessionStorage.setItem('user', id);
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('chatIndex', '0');
     API.defaults.headers['Authorization'] = `Bearer ${token}`;
 };
 

@@ -12,30 +12,16 @@ const ChatService = {
             });
     },
 
-     /**
-     * @param {*} msg { content, currentSessionUserId, receiverObjectId }
-     * @returns 
-     */
      saveMessage: (msg) => {
-        console.log('[ChatService] Saving message:', msg);
         const token = sessionStorage.getItem('token');
         if (!token) {
-            console.error('[ChatService] No token found in sessionStorage');
             return Promise.reject(new Error('No authentication token found'));
         }
-        console.log('[ChatService] Token present, making request to /api/chat/save-msg');
         return API.post('/api/chat/save-msg', msg)
             .then(({ data }) => {
-                console.log('[ChatService] Message saved successfully:', data);
                 return data;
             })
             .catch((err) => {
-                console.error('[ChatService] Save message error:', {
-                    status: err.response?.status,
-                    statusText: err.response?.statusText,
-                    data: err.response?.data,
-                    message: err.message
-                });
                 const errorMessage = err.response?.data?.data || err.response?.data?.message || 'Failed to save message';
                 throw new Error(errorMessage);
             });
@@ -47,7 +33,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Create room error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to create room';
             });
     },
@@ -58,7 +43,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Update room name error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to update room name';
             });
     },
@@ -69,7 +53,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Leave room error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to leave room';
             });
     },
@@ -80,7 +63,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Add to room error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to add user to room';
             });
     },
@@ -91,7 +73,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Get room error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to get room';
             });
     },
@@ -102,7 +83,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Get messages from user error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to get messages';
             });
     },
@@ -113,7 +93,6 @@ const ChatService = {
             return data;
         })
         .catch((err) => {
-                console.error('Get messages from room error:', err);
                 throw err.response?.data?.data || err.response?.data?.message || 'Failed to get messages';
             });
     },
