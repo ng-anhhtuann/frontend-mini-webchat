@@ -285,7 +285,7 @@
             display: flex;
             flex-direction: column;
             padding: 15px;
-            background-color: #ece3e3;
+            background-color: #f8f8f8;
             margin-bottom: 1rem;
             border-radius: 10px;
 
@@ -327,6 +327,11 @@
                     color: white;
                     cursor: pointer;
                 }
+                .formButton:hover {
+                    background-color: white;
+                    color: black;
+                    cursor: pointer;
+                }
             }
 
             #friends-box {
@@ -335,9 +340,8 @@
                 text-align: left;
                 align-items: center;
                 justify-content: center;
-                height: 100%;
+                max-height: fit-content;
                 margin-top: 1rem;
-                // background-color: #acb6c7;
 
                 @media (min-width: 800px) {
                     flex-direction: column;
@@ -346,18 +350,22 @@
                 .friend-list {
                     display: flex;
                     justify-content: space-between;
-                    padding: 15px;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
                     cursor: pointer;
                     flex-direction: column;
                     min-width: fit-content;
-
+                    border-radius: 10px;
+                    width: 100%;
+                
                     @media (min-width: 800px) {
                         flex-direction: row;
                     }
-
+                
                     & > div {
                         display: flex;
-
+                        margin-left: 15px;
+                
                         img {
                             display: flex;
                             align-self: center;
@@ -369,23 +377,33 @@
                             display: flex;
                             align-self: center;
                             flex-direction: column;
-
-                            h4{
-                                color: $friend-name
+                
+                            h4 {
+                                color: $friend-name;
                             }
-
-                            h5{
+                
+                            h5 {
                                 color: $friend-last-msg;
                             }
                         }
                     }
-
+                
                     .friend-status {
                         display: flex;
                         align-items: center;
                         justify-content: center;
                     }
-                }
+                
+                    &:hover {
+                        h4 {
+                            font-size: 1.2em; 
+                        }
+                    }
+                
+                    &:active {
+                        background-color: rgb(196, 196, 196); /* Change background color when clicked */
+                    }
+                }                
 
                 #no-chat {
                     padding: 10px;
@@ -396,18 +414,36 @@
                 background-color: $success;
                 border: none;
                 padding: 5px;
-                width: 50px;
                 color: white;
                 border-radius: 10px;
                 cursor: pointer;
                 font-weight: 600;
                 margin-top: 5px;
             }
-            .btn-done {
+            .btn-friend {
                 background-color: $done;
                 border: none;
                 padding: 5px;
-                width: 50px;
+                color: white;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-top: 5px;
+            }
+            .btn-wait {
+                background-color: $sent;
+                border: none;
+                padding: 5px;
+                color: white;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-top: 5px;
+            }
+            .btn-acp {
+                background-color: $received;
+                border: none;
+                padding: 5px;
                 color: white;
                 border-radius: 10px;
                 cursor: pointer;
@@ -420,6 +456,14 @@
         #messenger {
             width: 100%;
             display: flex;
+
+            #centered-none-div {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+            }
 
             #messenger-wrap {
                 width: 100%;

@@ -4,11 +4,12 @@ import { Footer, Button, Input, Text } from './index';
 import loginImage from '../../assets/images/login.svg';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../service/authService';
+import UserService from '../service/userService';
 import Toast from './Toast';
 
 export default function SignInForm({ onSubmit }) {
-    const [userName, setUserName] = useState('chienbinh15650');
-    const [password, setPassword] = useState('aaa');
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
     const [isNotify, setIsNotify] = useState(false);
     const [textNotify, setTextNotify] = useState('');
     const [typeNotify, setTypeNotify] = useState('');
@@ -21,15 +22,37 @@ export default function SignInForm({ onSubmit }) {
             password,
         };
         AuthService.login(data)
-            .then((data) => {
-                setTypeNotify('success'); //Set type for Toast
-                setTextNotify(`Login successfully!`); //Set text for Toast
-                return setIsNotify(true); //Set turning on Toast
+            .then((response) => {
+                // Verify token was stored
+                const token = sessionStorage.getItem('token');
+                if (!token) {
+                    throw new Error('Token not stored after login');
+                }
+                
+                // After successful login, get user profile
+                return UserService.getCurrentUserProfile()
+                    .then((profileResponse) => {
+                        // Backend returns { status: true, data: {...} }
+                        if (profileResponse.status && profileResponse.data) {
+                            // Store user profile data
+                            const userProfile = profileResponse.data;
+                            sessionStorage.setItem('userProfile', JSON.stringify({
+                                id: userProfile.id,
+                                userName: userProfile.userName,
+                                nameDisplay: userProfile.nameDisplay,
+                                avatar: userProfile.avatar,
+                                mail: userProfile.mail
+                            }));
+                        }
+                        setTypeNotify('success');
+                        setTextNotify(`Login successfully!`);
+                        setIsNotify(true);
+                    });
             })
             .catch((err) => {
                 setTypeNotify('error');
                 setTextNotify(err);
-                return setIsNotify(true);
+                setIsNotify(true);
             });
     };
 
@@ -49,13 +72,13 @@ export default function SignInForm({ onSubmit }) {
     const userNameInput = useMemo(() => {
         return (
             <Input
-                label="email address"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="username@gmail.com"
-                autoComplete="email"
-                htmlFor="email"
+                label="username"
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter your username"
+                autoComplete="username"
+                htmlFor="username"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
             />
@@ -92,7 +115,7 @@ export default function SignInForm({ onSubmit }) {
                 <div id="form-section">
                     <form onSubmit={onSubmit} className="formContainer">
                         <Text isSub={false} text={'sign in'} />
-                        <Text text={'use your email vs password to sign in'} />
+                        <Text text={'use your username and password to sign in'} />
                         {userNameInput}
                         {passwordInput}
                         <Button text="sign in" onClick={handleSubmit} />
