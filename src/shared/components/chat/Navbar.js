@@ -4,7 +4,6 @@ import { IoIosNotificationsOutline } from 'react-icons/io';
 const Navbar = ({userData}) => {
     const [notificationCount, setNotificationCount] = useState(0);
 
-    // Function to simulate receiving a new notification
     const receiveNotification = () => {
         setNotificationCount(notificationCount + 1);
     };

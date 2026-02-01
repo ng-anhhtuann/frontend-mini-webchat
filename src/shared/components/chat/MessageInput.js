@@ -23,7 +23,6 @@ const MessageInput = ({ currentChat, currentUserId }) => {
         setMessage('');
 
         try {
-            // Verify we have all required data
             if (!currentUserId) {
                 console.error('[MessageInput] No currentUserId provided');
                 alert('User ID not found. Please refresh the page.');
@@ -37,8 +36,6 @@ const MessageInput = ({ currentChat, currentUserId }) => {
                 hasToken: !!sessionStorage.getItem('token')
             });
 
-            // Determine if it's a user chat or room chat
-            // If currentChat has an 'id' and no 'members', it's a user chat
             const isRoomChat = currentChat.members && currentChat.members.length > 0;
             const receiverId = isRoomChat ? currentChat.id : currentChat.id;
 
@@ -50,7 +47,7 @@ const MessageInput = ({ currentChat, currentUserId }) => {
         } catch (error) {
             console.error('Error sending message:', error);
             alert('Failed to send message. Please try again.');
-            setMessage(messageContent); // Restore message on error
+            setMessage(messageContent);
         } finally {
             setSending(false);
         }
@@ -75,7 +72,7 @@ const MessageInput = ({ currentChat, currentUserId }) => {
                     disabled={sending || !currentChat}
                 />
                 <button type="submit" disabled={sending || !message.trim() || !currentChat}>
-                    <BiSend />
+                <BiSend />
                 </button>
             </form>
         </div>
